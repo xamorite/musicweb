@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  /* 'scrollbar-width' is only supported in Firefox and Chrome 121+ */
+  scrollbar-width: none; /* Firefox and modern Chrome */
+}
