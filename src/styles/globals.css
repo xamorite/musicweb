@@ -5,6 +5,17 @@
 }
 .no-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
-  /* 'scrollbar-width' is only supported in Firefox and Chrome 121+ */
-  scrollbar-width: none; /* Firefox and modern Chrome */
+  /* Hide scrollbar for Firefox and modern Chrome (121+) */
+  /* scrollbar-width: none; */
+}
+
+
+@theme {
+  --font-primary: "Manrope", "sans-serif";
+  --color-graybackground: #1A1A1A;
+  --color-searchbackground: #FFFFFF;
+  --color-purplebutton: #B77EEE;
+  --color-arrivalbg: #4F6185;
+  --color-tahiti: #3ab7bf;
+  --color-bermuda: #78dcca;
 }

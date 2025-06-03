@@ -1,14 +1,19 @@
+
 import React, { useState } from "react";
 import { Home, Compass, Music, User, Plus, ListMusic } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from 'next/router';
+
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const router = useRouter();
 
   const navItems = [
-    { icon: <Home size={20} />, label: "Home" },
-    { icon: <Compass size={20} />, label: "Discover" },
-    { icon: <Music size={20} />, label: "Library" },
-    { icon: <User size={20} />, label: "Profile" },
+    { icon: <Home size={20} />, label: "Home", ref: "/" },
+    { icon: <Compass size={20} />, label: "Discover", ref: "/discover" },
+    { icon: <Music size={20} />, label: "Library", ref: "/library" },
+    { icon: <User size={20} />, label: "Profile", ref: "/profile" },
   ];
 
   const playlists = [
@@ -20,6 +25,10 @@ const Sidebar = () => {
     "Childhood Dreams",
   ];
 
+  const goToHome = () => {
+    router.push("/"); // Navigates to home page
+  };
+
   return (
     <div
       className={`fixed  h-screen pt-8 bg-black text-white transition-all duration-300 ease-in-out ${
@@ -28,7 +37,8 @@ const Sidebar = () => {
     >
       <button
         className="flex items-center gap-2 mb-6"
-        onClick={() => setCollapsed(!collapsed)}
+        onDoubleClick={() => setCollapsed(!collapsed)}
+        onClick={goToHome}
       >
         <Home size={20} />
         {!collapsed && <span className="text-lg font-semibold">Home</span>}
@@ -36,10 +46,14 @@ const Sidebar = () => {
 
       <nav className="flex flex-col gap-4">
         {navItems.slice(1).map((item, index) => (
-          <div key={index} className="flex items-center gap-2">
-            {item.icon}
-            {!collapsed && <span>{item.label}</span>}
-          </div>
+          <Link href={item.ref}>
+           
+              <div key={index} className="flex items-center gap-2">
+                {item.icon}
+                {!collapsed && <span>{item.label}</span>}
+              </div>
+            
+          </Link>
         ))}
       </nav>
 
