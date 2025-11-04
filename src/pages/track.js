@@ -42,7 +42,7 @@ class Track {
       instagram: user.instagram_handle,
       website: user.website,
       trackCount: user.track_count,
-      playlistCount: user.playlist_count
+      playlistCount: user.playlist_count,
     };
   }
 
@@ -50,7 +50,7 @@ class Track {
   get formattedDuration() {
     const mins = Math.floor(this.duration / 60);
     const secs = this.duration % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
   }
 
   // Example computed property (full permalink)
@@ -58,3 +58,5 @@ class Track {
     return `https://audius.co${this.permalink}`;
   }
 }
+
+export default Track;
