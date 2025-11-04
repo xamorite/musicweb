@@ -2,10 +2,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../auth/useAuth";
 import useFetchTracks from "../hooks/useFetchTracks";
-import Sidebar from "../components/sidebar";
-import { Search } from "lucide-react";
-import NewArrival from "../components/newArrival";
-import SectionBar from "../components/sectionBar";
 import HomePage from "./home";
 
 const Home = () => {
