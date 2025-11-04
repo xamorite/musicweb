@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../auth/useAuth";
 import useFetchTracks from "../hooks/useFetchTracks";
-import TrackCard from "../components/TrackCard";
 import Sidebar from "../components/sidebar";
 import { Search } from "lucide-react";
 import NewArrival from "../components/newArrival";
