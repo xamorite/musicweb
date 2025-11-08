@@ -19,7 +19,7 @@ const Home = () => {
 
   return (
     <div className="flex text-white min-h-screen">
-      <HomePage/>
+    
     </div>
   );
 };

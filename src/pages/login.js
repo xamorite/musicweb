@@ -1,37 +1,94 @@
-// source/pages/login.js
-import { useState } from 'react';
-import { useAuth } from '../auth/useAuth';
+// app/login/page.js
+'use client';
 
-const Login = () => {
-  const { login } = useAuth(); // Custom hook for authentication
+import Link from 'next/link';
+import { useState } from 'react';
+import { useAuth } from '../../lib/auth';
+
+export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false); // New state for loading
+  const { login } = useAuth();
 
+  // FIX: Make this function asynchronous and await the login result
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(email, password);
+    setError('');
+    setIsSubmitting(true);
+    
+    try {
+        const success = await login(email, password);
+        
+        if (!success) {
+            // If the login function returns false (indicating a failure after API call)
+            setError('Login failed. Please check your email and password or try again later.');
+        }
+        // If successful, useAuth handles the storage and redirect.
+
+    } catch (err) {
+        // This catch block handles unexpected errors, though lib/auth.js catches most API errors
+        console.error("Login component error:", err);
+        setError('An unexpected error occurred during login.');
+    } finally {
+        setIsSubmitting(false);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Login</h1>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-        required
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-        required
-      />
-      <button type="submit">Login</button>
-    </form>
-  );
-};
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-gray-900 to-blue text-white">
+      <div className="w-full max-w-md p-8 space-y-6 bg-black/80 rounded-lg shadow-xl">
+        <h2 className="text-3xl font-bold text-center text-white">Sign In</h2>
+        
+        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+        
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-white">Email</label>
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-white">Password</label>
+            <input
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+          
+          <button
+            type="submit"
+            disabled={isSubmitting} // Disable button while submitting
+            className={`w-full py-2 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors ${
+                isSubmitting 
+                    ? 'bg-indigo-400 cursor-not-allowed' 
+                    : 'bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500'
+            }`}
+          >
+            {isSubmitting ? 'Logging In...' : 'Log In'}
+          </button>
+        </form>
 
-export default Login;
+        <div className="flex items-center justify-between">
+          {/* 3. Forgot Password Link */}
+          <Link href="/forgot-password" className="text-sm text-indigo-600 hover:text-indigo-500">
+            Forgot password?
+          </Link>
+          <Link href="/signup" className="text-sm text-gray-600 hover:text-gray-700">
+            Need an account? Sign Up
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
