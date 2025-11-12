@@ -77,10 +77,4 @@ Follow these steps to set up the project locally.
 
 ---
 
-## 🤝 Contribution
 
-We welcome contributions! Please check out our `CONTRIBUTING.md` for guidelines on how to submit pull requests, report bugs, and suggest features.
-
-## 📜 License
-
-This project is licensed under the **MIT License**. See the `LICENSE` file for details.
